@@ -1,5 +1,5 @@
 {
-  "name": "cli",
+  "name": "@cynthiateeters/dirmanager",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -10,7 +10,17 @@
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cynthiateeters/cli.git"
+  },
+  "keywords": [
+    "node",
+    "cli",
+    "directory",
+    "manager",
+    "typescript"
+  ],
   "author": "Cynthia Teeters <cynthia.teeters@raritanval.edu> (https://github.com/cynthiateeters)",
   "license": "MIT",
   "dependencies": {
