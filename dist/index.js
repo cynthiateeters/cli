@@ -9,13 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const { Command } = require("commander");
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const commander_1 = __importDefault(require("commander"));
 // import fs and path modules
 const fs = require("fs");
 const path = require("path");
 const figlet = require("figlet");
-const program = new Command();
 console.log(figlet.textSync("Dir Manager"));
+const program = new commander_1.default.Command();
 program
     .version("1.0.0")
     .description("An example CLI for managing a directory")
@@ -31,7 +35,7 @@ function listDirContents(filepath) {
             // add the following
             const files = yield fs.promises.readdir(filepath);
             const detailedFilesPromises = files.map((file) => __awaiter(this, void 0, void 0, function* () {
-                let fileDetails = yield fs.promises.lstat(path.resolve(filepath, file));
+                const fileDetails = yield fs.promises.lstat(path.resolve(filepath, file));
                 const { size, birthtime } = fileDetails;
                 return { filename: file, "size(KB)": size, created_at: birthtime };
             }));

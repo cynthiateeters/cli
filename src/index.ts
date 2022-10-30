@@ -1,14 +1,20 @@
 #! /usr/bin/env node
-const { Command } = require("commander");
+import commander from "commander";
 // import fs and path modules
-const fs = require("fs");
-const path = require("path");
-const figlet = require("figlet");
+import fs = require("fs");
+import path = require("path");
+import figlet = require("figlet");
 
+interface Options {
+  ls: string;
+  mkdir: string;
+  touch: string;
+}
 
-const program = new Command();
 
 console.log(figlet.textSync("Dir Manager"));
+
+const program = new commander.Command();
 
 program
   .version("1.0.0")
@@ -18,7 +24,7 @@ program
   .option("-t, --touch <value>", "Create a file")
   .parse(process.argv);
 
-const options = program.opts();
+const options: Options = program.opts();
 
 //define the following function
 async function listDirContents(filepath: string) {
@@ -26,7 +32,7 @@ async function listDirContents(filepath: string) {
     // add the following
     const files = await fs.promises.readdir(filepath);
     const detailedFilesPromises = files.map(async (file: string) => {
-      let fileDetails = await fs.promises.lstat(path.resolve(filepath, file));
+      const fileDetails = await fs.promises.lstat(path.resolve(filepath, file));
       const { size, birthtime } = fileDetails;
       return { filename: file, "size(KB)": size, created_at: birthtime };
     });
@@ -36,6 +42,7 @@ async function listDirContents(filepath: string) {
     console.error("Error occurred while reading the directory!", error);
   }
 }
+
 
 // create the following function
 function createDir(filepath: string) {
@@ -52,6 +59,7 @@ function createFile(filepath: string) {
 
 if (options.ls) {
   const filepath = typeof options.ls === "string" ? options.ls : __dirname;
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   listDirContents(filepath);
 }
 if (options.mkdir) {
